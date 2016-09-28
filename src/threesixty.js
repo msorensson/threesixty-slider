@@ -511,6 +511,14 @@ var ThreeSixty = function(el, options) {
         }
     };
 
+    self.triggerFrameChangeEvent = function(current, total) {
+        var event = document.createEvent('Event');
+        event.current = current;
+        event.total = total;
+        event.initEvent('frameIndexChanged');
+        self.el.dispatchEvent(event);
+    };
+
     /**
      * @method refresh
      * @private
@@ -524,7 +532,8 @@ var ThreeSixty = function(el, options) {
             self.hidePreviousFrame();
             AppConfig.currentFrame += frameEasing;
             self.showCurrentFrame();
-            self.$el.trigger('frameIndexChanged', [self.getNormalizedCurrentFrame(), AppConfig.totalFrames]);
+            self.triggerFrameChangeEvent(self.getNormalizedCurrentFrame(), AppConfig.totalFrames);
+
         } else {
             window.clearInterval(AppConfig.ticker);
             AppConfig.ticker = 0;
