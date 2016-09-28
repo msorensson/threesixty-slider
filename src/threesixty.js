@@ -165,7 +165,6 @@ var ThreeSixty = function(el, options) {
      * - Initilizes mouse intraction events
      */
     self.showImages = function () {
-        //self.$el.find('.txtC').fadeIn();
         var imgList = self.el.querySelector(AppConfig.imgList);
         imgList.classList.add('visible');
         self.ready = true;
