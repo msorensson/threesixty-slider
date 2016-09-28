@@ -203,32 +203,38 @@ var ThreeSixty = function(el, options) {
         if (AppConfig.navigation && !AppConfig.navigation_init) {
             var nav_bar, next, previous, play_stop;
 
-            nav_bar = $('<div/>').attr('class', 'nav_bar');
+            nav_bar = document.createElement('div');
+            nav_bar.classList.add('nav_bar');
 
-            next = $('<a/>').attr({
-                'href': '#',
-                'class': 'nav_bar_next'
-            }).html('next');
+            next = document.createElement('a');
+            next.classList.add('nav_bar_next');
+            next.setAttribute('href', '#');
+            next.innerHTML = 'next';
 
-            previous = $('<a/>').attr({
-                'href': '#',
-                'class': 'nav_bar_previous'
-            }).html('previous');
+            previous = document.createElement('a');
+            previous.classList.add('nav_bar_previous');
+            previous.setAttribute('href', '#');
+            previous.innerHTML = 'previous';
 
-            play_stop = $('<a/>').attr({
-                'href': '#',
-                'class': 'nav_bar_play'
-            }).html('play');
+            play_stop = document.createElement('a');
+            play_stop.classList.add('nav_bar_play');
+            play_stop.setAttribute('href', '#');
+            play_stop.innerHTML = 'play';
 
-            nav_bar.append(previous);
-            nav_bar.append(play_stop);
-            nav_bar.append(next);
+            nav_bar.appendChild(previous);
+            nav_bar.appendChild(play_stop);
+            nav_bar.appendChild(next);
 
-            self.$el.prepend(nav_bar);
+            self.el.insertBefore(nav_bar, self.el.firstChild);
 
-            next.bind('mousedown touchstart', self.next);
-            previous.bind('mousedown touchstart', self.previous);
-            play_stop.bind('mousedown touchstart', self.play_stop);
+            next.addEventListener('mousedown', self.next);
+            next.addEventListener('touchstart', self.next);
+
+            previous.addEventListener('mousedown', self.previous);
+            previous.addEventListener('touchstart', self.previous);
+
+            play_stop.addEventListener('mousedown', self.play_stop);
+            play_stop.addEventListener('touchstart', self.play_stop);
             AppConfig.navigation_init = true;
         }
     };
@@ -247,10 +253,12 @@ var ThreeSixty = function(el, options) {
         if (!AppConfig.autoplay) {
             AppConfig.autoplay = true;
             AppConfig.play = setInterval(self.moveToNextFrame, AppConfig.playSpeed);
-            $(event.currentTarget).removeClass('nav_bar_play').addClass('nav_bar_stop');
+            event.currentTarget.classList.remove('nav_bar_play');
+            event.currentTarget.classList.add('nav_bar_stop');
         } else {
             AppConfig.autoplay = false;
-            $(event.currentTarget).removeClass('nav_bar_stop').addClass('nav_bar_play');
+            event.currentTarget.classList.remove('nav_bar_stop');
+            event.currentTarget.classList.add('nav_bar_play');
             clearInterval(AppConfig.play);
             AppConfig.play = null;
         }
