@@ -13,11 +13,6 @@
     "type": "git",
     "url": "http://github.com/msorensson/threesixty-slider.git"
   },
-  "ignore": [
-    ".jshintrc",
-    ".editorconfig",
-    ".bowerrc"
-  ],
   "dependencies": {
     "classlist-polyfill": "^1.0.3",
     "lodash": "^4.16.2"
