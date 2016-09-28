@@ -662,20 +662,6 @@ var ThreeSixty = function(el, options) {
         return rv !== -1;
     };
 
-
-    /**
-     * @method getConfig
-     * The function returns the extended version of config object the plugin is going to
-     * user.
-     *
-     * @public
-     *
-     * @return Object
-     */
-    self.getConfig = function() {
-        return AppConfig;
-    };
-
     ThreeSixty.defaultOptions = {
         /**
          * @cfg {Boolean} dragging [dragging=false]
