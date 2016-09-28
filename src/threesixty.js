@@ -482,9 +482,9 @@ var ThreeSixty = function(el, options) {
             if (AppConfig.monitorStartTime < new Date().getTime() - AppConfig.monitorInt) {
                 AppConfig.pointerDistance = AppConfig.pointerEndPosX - AppConfig.pointerStartPosX;
                 if(AppConfig.pointerDistance > 0){
-                    AppConfig.endFrame = AppConfig.currentFrame + Math.ceil((AppConfig.totalFrames - 1) * AppConfig.speedMultiplier * (AppConfig.pointerDistance / self.$el.width()));
+                    AppConfig.endFrame = AppConfig.currentFrame + Math.ceil((AppConfig.totalFrames - 1) * AppConfig.speedMultiplier * (AppConfig.pointerDistance / self.el.offsetWidth));
                 }else{
-                    AppConfig.endFrame = AppConfig.currentFrame + Math.floor((AppConfig.totalFrames - 1) * AppConfig.speedMultiplier * (AppConfig.pointerDistance / self.$el.width()));
+                    AppConfig.endFrame = AppConfig.currentFrame + Math.floor((AppConfig.totalFrames - 1) * AppConfig.speedMultiplier * (AppConfig.pointerDistance / self.el.offsetWidth));
                 }
 
                 if( AppConfig.disableWrap ) {
@@ -538,7 +538,9 @@ var ThreeSixty = function(el, options) {
      */
 
     self.hidePreviousFrame = function () {
-        frames[self.getNormalizedCurrentFrame()].removeClass('current-image').addClass('previous-image');
+        var frame = frames[self.getNormalizedCurrentFrame()][0];
+        frame.classList.remove('current-image');
+        frame.classList.add('previous-image');
     };
 
     /**
@@ -547,7 +549,9 @@ var ThreeSixty = function(el, options) {
      * Function shows the current frame in the animation loop.
      */
     self.showCurrentFrame = function () {
-        frames[self.getNormalizedCurrentFrame()].removeClass('previous-image').addClass('current-image');
+        var frame = frames[self.getNormalizedCurrentFrame()][0];
+        frame.classList.remove('previous-image');
+        frame.classList.add('current-image');
     };
 
     /**
