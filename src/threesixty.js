@@ -173,17 +173,17 @@ var ThreeSixty = function(el, options) {
      * the progress percentage in this function.
      */
     self.imageLoaded = function () {
+        var spinnerTextEl = self.el.querySelector(AppConfig.progress + ' span');
         AppConfig.loadedImages += 1;
-        $(AppConfig.progress + ' span').text(Math.floor(AppConfig.loadedImages / AppConfig.totalFrames * 100) + '%');
+        spinnerTextEl.innerHTML = Math.floor(AppConfig.loadedImages / AppConfig.totalFrames * 100) + '%';
         if (AppConfig.loadedImages >= AppConfig.totalFrames) {
             if(AppConfig.disableSpin) {
-                frames[0].removeClass('previous-image').addClass('current-image');
+                frames[0][0].classList.remove('previous-image');
+                frames[0][0].classList.add('current-image');
             }
-            $(AppConfig.progress).fadeOut('slow', function () {
-                $(this).hide();
-                self.showImages();
-                self.showNavigation();
-            });
+
+            self.showImages();
+            self.showNavigation();
         } else {
             self.loadImages();
         }
