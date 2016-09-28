@@ -118,13 +118,14 @@ var ThreeSixty = function(el, options) {
      * @private
      */
     self.initProgress = function() {
-        self.$el.css({
-            width: AppConfig.width + 'px',
-            height: AppConfig.height + 'px',
-            'background-image': 'none !important'
-        });
+        self.el.style.width = AppConfig.width + 'px';
+        self.el.style.height = AppConfig.height + 'px';
+        self.el.style.backgroundImage = 'none !important';
+
         if(AppConfig.styles) {
-            self.$el.css(AppConfig.styles);
+            for (var key in AppConfig.styles) {
+                self.el.style[key] = AppConfig.styles[key];
+            }
         }
 
         self.responsive();
