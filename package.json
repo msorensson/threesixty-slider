@@ -1,6 +1,7 @@
 {
   "name": "threesixty-slider",
   "description": "360 degree Image Slider",
+  "version": "1.0.0",
   "scripts": {
     "build": "npm run build:webpack",
     "build:webpack": "webpack --progress --optimize-minimize",
