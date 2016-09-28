@@ -8,6 +8,7 @@
  */
 
 'use strict';
+var assign = require('lodash/assign');
 
 /**
  * @class ThreeSixty
@@ -94,7 +95,7 @@ var ThreeSixty = function(el, options) {
      *      });
      */
     self.init = function() {
-        AppConfig = $.extend({}, ThreeSixty.defaultOptions, options);
+        AppConfig = assign(ThreeSixty.defaultOptions, options);
         if(AppConfig.disableSpin) {
             AppConfig.currentFrame = 1;
             AppConfig.endFrame = 1;

@@ -7,7 +7,7 @@
     "build:webpack": "webpack --progress --optimize-minimize",
     "dev": "npm run dev:webpack & npm run browsersync",
     "dev:webpack": "webpack -w",
-    "browsersync": "browser-sync start --server --files"
+    "browsersync": "browser-sync start --server --files src"
   },
   "repository": {
     "type": "git",
@@ -18,7 +18,9 @@
     ".editorconfig",
     ".bowerrc"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "lodash": "^4.16.2"
+  },
   "devDependencies": {
     "browser-sync": "^2.16.0",
     "path": "^0.12.7",
