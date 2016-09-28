@@ -122,14 +122,14 @@ var ThreeSixty = function(el, options) {
         image.classList.add('previous-image');
         li.appendChild(image);
 
-        frames.push($(image));
+        self.frames.push(image);
 
         imageList = self.el.querySelector(AppConfig.imgList);
         imageList.appendChild(li);
 
-        $(image).load(function () {
+        image.onload = function() {
             self.imageLoaded();
-        });
+        };
     };
 
     /**
@@ -144,8 +144,8 @@ var ThreeSixty = function(el, options) {
         spinnerTextEl.innerHTML = Math.floor(AppConfig.loadedImages / AppConfig.totalFrames * 100) + '%';
         if (AppConfig.loadedImages >= AppConfig.totalFrames) {
             if(AppConfig.disableSpin) {
-                frames[0][0].classList.remove('previous-image');
-                frames[0][0].classList.add('current-image');
+                self.frames[0].classList.remove('previous-image');
+                self.frames[0].classList.add('current-image');
             }
 
             self.showImages();
@@ -513,7 +513,7 @@ var ThreeSixty = function(el, options) {
      */
 
     self.hidePreviousFrame = function () {
-        var frame = frames[self.getNormalizedCurrentFrame()][0];
+        var frame = self.frames[self.getNormalizedCurrentFrame()];
         frame.classList.remove('current-image');
         frame.classList.add('previous-image');
     };
@@ -524,7 +524,7 @@ var ThreeSixty = function(el, options) {
      * Function shows the current frame in the animation loop.
      */
     self.showCurrentFrame = function () {
-        var frame = frames[self.getNormalizedCurrentFrame()][0];
+        var frame = self.frames[self.getNormalizedCurrentFrame()];
         frame.classList.remove('previous-image');
         frame.classList.add('current-image');
     };
