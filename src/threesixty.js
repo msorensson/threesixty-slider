@@ -8,6 +8,7 @@
  */
 
 'use strict';
+require('classlist-polyfill');
 var assign = require('lodash/assign');
 
 /**
