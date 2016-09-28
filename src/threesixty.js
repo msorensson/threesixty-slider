@@ -418,8 +418,7 @@ var ThreeSixty = function(el, options) {
      *
      */
     self.initEvents = function () {
-        self.$el.bind('mousedown touchstart touchmove touchend mousemove click', function (event) {
-
+        function multiEventListener(event) {
             event.preventDefault();
 
             if ((event.type === 'mousedown' && event.which === 1) || event.type === 'touchstart') {
@@ -432,19 +431,25 @@ var ThreeSixty = function(el, options) {
                 AppConfig.dragging = false;
                 AppConfig.onDragStop(AppConfig.endFrame);
             }
-        });
+        }
 
-        $(document).bind('mouseup', function (event) {
+        self.el.addEventListener('mousedown', multiEventListener);
+        self.el.addEventListener('touchstart', multiEventListener);
+        self.el.addEventListener('touchmove', multiEventListener);
+        self.el.addEventListener('touchend', multiEventListener);
+        self.el.addEventListener('click', multiEventListener);
+
+        function mouseUp(event) {
             AppConfig.dragging = false;
             AppConfig.onDragStop(AppConfig.endFrame);
             $(this).css('cursor', 'none');
-        });
+        }
 
-        $(window).bind('resize', function (event) {
-            self.responsive();
-        });
+        document.addEventListener('mouseup', mouseUp);
 
-        $(document).bind('mousemove', function (event) {
+        window.addEventListener('resize', self.responsive.bind(self));
+
+        function mouseMove(event) {
             if (AppConfig.dragging) {
                 event.preventDefault();
                 if(!self.browser.isIE && AppConfig.showCursor) {
@@ -456,12 +461,9 @@ var ThreeSixty = function(el, options) {
                 }
             }
             self.trackPointer(event);
+        }
 
-        });
-
-        $(window).resize(function() {
-            self.resize();
-        });
+        document.addEventListener('mousemove', mouseMove);
     };
 
     /**
@@ -472,7 +474,7 @@ var ThreeSixty = function(el, options) {
      * @params {Object} [event]
      */
     self.getPointerEvent = function (event) {
-        return event.originalEvent.targetTouches ? event.originalEvent.targetTouches[0] : event;
+        return event.targetTouches ? event.targetTouches[0] : event;
     };
 
     /**
