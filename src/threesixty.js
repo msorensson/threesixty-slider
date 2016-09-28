@@ -54,7 +54,9 @@
  *
  * @return this
  */
-$.ThreeSixty = function(el, options) {
+var ThreeSixty = function(el, options) {
+
+
     // To avoid scope issues, use 'base' instead of 'this'
     // to reference this class from internal events and functions.
     var base = this,
@@ -94,7 +96,7 @@ $.ThreeSixty = function(el, options) {
      *      });
      */
     base.init = function() {
-        AppConfig = $.extend({}, $.ThreeSixty.defaultOptions, options);
+        AppConfig = $.extend({}, ThreeSixty.defaultOptions, options);
         if(AppConfig.disableSpin) {
             AppConfig.currentFrame = 1;
             AppConfig.endFrame = 1;
@@ -656,7 +658,7 @@ $.ThreeSixty = function(el, options) {
         return AppConfig;
     };
 
-    $.ThreeSixty.defaultOptions = {
+    ThreeSixty.defaultOptions = {
         /**
          * @cfg {Boolean} dragging [dragging=false]
          * @private
@@ -872,7 +874,7 @@ $.ThreeSixty = function(el, options) {
 };
 
 $.fn.ThreeSixty = function(options) {
-    return Object.create(new $.ThreeSixty(this, options));
+    return Object.create(new ThreeSixty(this, options));
 };
 
 /**
