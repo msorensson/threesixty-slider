@@ -55,11 +55,9 @@
  * @return this
  */
 var ThreeSixty = function(el, options) {
-
-
     // To avoid scope issues, use 'base' instead of 'this'
     // to reference this class from internal events and functions.
-    var base = this,
+    var self = this,
         AppConfig, frames = [],
         VERSION = '2.0.5';
     // Access to jQuery and DOM versions of element
@@ -67,10 +65,10 @@ var ThreeSixty = function(el, options) {
      * @property {$el}
      * jQuery Dom node attached to the slider inherits all jQuery public functions.
      */
-    base.$el = $(el);
-    base.el = el;
+    self.$el = $(el);
+    self.el = el;
     // Add a reverse reference to the DOM object
-    base.$el.data('ThreeSixty', base);
+    self.$el.data('ThreeSixty', self);
     /**
      * @method init
      * The function extends the user options with default settings for the
@@ -95,20 +93,20 @@ var ThreeSixty = function(el, options) {
      *        }
      *      });
      */
-    base.init = function() {
+    self.init = function() {
         AppConfig = $.extend({}, ThreeSixty.defaultOptions, options);
         if(AppConfig.disableSpin) {
             AppConfig.currentFrame = 1;
             AppConfig.endFrame = 1;
         }
-        base.initProgress();
-        base.loadImages();
+        self.initProgress();
+        self.loadImages();
     };
 
     /*
      * Function to resize the height of responsive slider.
      */
-    base.resize = function() {
+    self.resize = function() {
         // calculate height
     };
     /**
@@ -118,23 +116,23 @@ var ThreeSixty = function(el, options) {
      *
      * @private
      */
-    base.initProgress = function() {
-        base.$el.css({
+    self.initProgress = function() {
+        self.$el.css({
             width: AppConfig.width + 'px',
             height: AppConfig.height + 'px',
             'background-image': 'none !important'
         });
         if(AppConfig.styles) {
-            base.$el.css(AppConfig.styles);
+            self.$el.css(AppConfig.styles);
         }
 
-        base.responsive();
+        self.responsive();
 
-        base.$el.find(AppConfig.progress).css({
+        self.$el.find(AppConfig.progress).css({
             marginTop: ((AppConfig.height / 2) - 15) + 'px'
         });
-        base.$el.find(AppConfig.progress).fadeIn('slow');
-        base.$el.find(AppConfig.imgList).hide();
+        self.$el.find(AppConfig.progress).fadeIn('slow');
+        self.$el.find(AppConfig.imgList).hide();
     };
 
     /**
@@ -142,21 +140,21 @@ var ThreeSixty = function(el, options) {
      * @private
      * The function asynchronously loads images and inject into the slider.
      */
-    base.loadImages = function() {
-        var li, imageName, image, host, baseIndex;
+    self.loadImages = function() {
+        var li, imageName, image, host, selfIndex;
         li = document.createElement('li');
-        baseIndex = AppConfig.zeroBased ? 0 : 1;
+        selfIndex = AppConfig.zeroSelfd ? 0 : 1;
         imageName = !AppConfig.imgArray ?
-            AppConfig.domain + AppConfig.imagePath + AppConfig.filePrefix + base.zeroPad((AppConfig.loadedImages + baseIndex)) + AppConfig.ext + ((base.browser.isIE()) ? '?' + new Date().getTime() : '') :
+            AppConfig.domain + AppConfig.imagePath + AppConfig.filePrefix + self.zeroPad((AppConfig.loadedImages + selfIndex)) + AppConfig.ext + ((self.browser.isIE()) ? '?' + new Date().getTime() : '') :
         AppConfig.imgArray[AppConfig.loadedImages];
         image = $('<img>').attr('src', imageName).addClass('previous-image').appendTo(li);
 
         frames.push(image);
 
-        base.$el.find(AppConfig.imgList).append(li);
+        self.$el.find(AppConfig.imgList).append(li);
 
         $(image).load(function () {
-            base.imageLoaded();
+            self.imageLoaded();
         });
     };
 
@@ -166,7 +164,7 @@ var ThreeSixty = function(el, options) {
      * The function gets triggers once the image is loaded. We also update
      * the progress percentage in this function.
      */
-    base.imageLoaded = function () {
+    self.imageLoaded = function () {
         AppConfig.loadedImages += 1;
         $(AppConfig.progress + ' span').text(Math.floor(AppConfig.loadedImages / AppConfig.totalFrames * 100) + '%');
         if (AppConfig.loadedImages >= AppConfig.totalFrames) {
@@ -175,11 +173,11 @@ var ThreeSixty = function(el, options) {
             }
             $(AppConfig.progress).fadeOut('slow', function () {
                 $(this).hide();
-                base.showImages();
-                base.showNavigation();
+                self.showImages();
+                self.showNavigation();
             });
         } else {
-            base.loadImages();
+            self.loadImages();
         }
     };
 
@@ -192,29 +190,29 @@ var ThreeSixty = function(el, options) {
      * - Displays the 360 images
      * - Initilizes mouse intraction events
      */
-    base.showImages = function () {
-        base.$el.find('.txtC').fadeIn();
-        base.$el.find(AppConfig.imgList).fadeIn();
-        base.ready = true;
+    self.showImages = function () {
+        self.$el.find('.txtC').fadeIn();
+        self.$el.find(AppConfig.imgList).fadeIn();
+        self.ready = true;
         AppConfig.ready = true;
 
         if (AppConfig.drag) {
-            base.initEvents();
+            self.initEvents();
         }
-        base.refresh();
-        base.initPlugins();
+        self.refresh();
+        self.initPlugins();
         AppConfig.onReady();
 
-        setTimeout(function() { base.responsive(); }, 50);
+        setTimeout(function() { self.responsive(); }, 50);
     };
 
     /**
      * The function to initilize external plugin
      */
-    base.initPlugins = function () {
+    self.initPlugins = function () {
         $.each(AppConfig.plugins, function(i, plugin) {
             if(typeof $[plugin] === 'function') {
-                $[plugin].call(base, base.$el, AppConfig);
+                $[plugin].call(self, self.$el, AppConfig);
             } else {
                 throw new Error(plugin + ' not available.');
             }
@@ -226,7 +224,7 @@ var ThreeSixty = function(el, options) {
      * Creates a navigation panel if navigation is set to true in the
      * settings.
      */
-    base.showNavigation = function() {
+    self.showNavigation = function() {
         if (AppConfig.navigation && !AppConfig.navigation_init) {
             var nav_bar, next, previous, play_stop;
 
@@ -251,11 +249,11 @@ var ThreeSixty = function(el, options) {
             nav_bar.append(play_stop);
             nav_bar.append(next);
 
-            base.$el.prepend(nav_bar);
+            self.$el.prepend(nav_bar);
 
-            next.bind('mousedown touchstart', base.next);
-            previous.bind('mousedown touchstart', base.previous);
-            play_stop.bind('mousedown touchstart', base.play_stop);
+            next.bind('mousedown touchstart', self.next);
+            previous.bind('mousedown touchstart', self.previous);
+            play_stop.bind('mousedown touchstart', self.play_stop);
             AppConfig.navigation_init = true;
         }
     };
@@ -268,12 +266,12 @@ var ThreeSixty = function(el, options) {
      *
      */
 
-    base.play_stop = function(event) {
+    self.play_stop = function(event) {
         event.preventDefault();
 
         if (!AppConfig.autoplay) {
             AppConfig.autoplay = true;
-            AppConfig.play = setInterval(base.moveToNextFrame, AppConfig.playSpeed);
+            AppConfig.play = setInterval(self.moveToNextFrame, AppConfig.playSpeed);
             $(event.currentTarget).removeClass('nav_bar_play').addClass('nav_bar_stop');
         } else {
             AppConfig.autoplay = false;
@@ -290,10 +288,10 @@ var ThreeSixty = function(el, options) {
      *
      */
 
-    base.next = function(event) {
+    self.next = function(event) {
         if (event) { event.preventDefault(); }
         AppConfig.endFrame -= 5;
-        base.refresh();
+        self.refresh();
     };
 
     /**
@@ -302,10 +300,10 @@ var ThreeSixty = function(el, options) {
      * @param {Object} [event] jQuery events object.
      *
      */
-    base.previous = function(event) {
+    self.previous = function(event) {
         if (event) { event.preventDefault(); }
         AppConfig.endFrame += 5;
-        base.refresh();
+        self.refresh();
     };
 
     /**
@@ -313,14 +311,14 @@ var ThreeSixty = function(el, options) {
      * You are start the auto rotaion for the slider with this function.
      *
      */
-    base.play = function(speed, direction) {
+    self.play = function(speed, direction) {
         var _speed = speed || AppConfig.playSpeed;
         var _direction = direction || AppConfig.autoplayDirection;
         AppConfig.autoplayDirection = _direction
 
         if (!AppConfig.autoplay) {
             AppConfig.autoplay = true;
-            AppConfig.play = setInterval(base.moveToNextFrame, _speed);
+            AppConfig.play = setInterval(self.moveToNextFrame, _speed);
         }
     };
 
@@ -330,7 +328,7 @@ var ThreeSixty = function(el, options) {
      *
      */
 
-    base.stop = function() {
+    self.stop = function() {
         if (AppConfig.autoplay) {
             AppConfig.autoplay = false;
             clearInterval(AppConfig.play);
@@ -344,13 +342,13 @@ var ThreeSixty = function(el, options) {
      * Function animates to previous frame
      *
      */
-    base.moveToNextFrame = function () {
+    self.moveToNextFrame = function () {
         if (AppConfig.autoplayDirection === 1) {
             AppConfig.endFrame -= 1;
         } else {
             AppConfig.endFrame += 1;
         }
-        base.refresh();
+        self.refresh();
     };
 
     /**
@@ -359,10 +357,10 @@ var ThreeSixty = function(el, options) {
      * Function animates to previous frame
      *
      */
-    base.gotoAndPlay = function (n) {
+    self.gotoAndPlay = function (n) {
         if( AppConfig.disableWrap ) {
             AppConfig.endFrame = n;
-            base.refresh();
+            self.refresh();
         } else {
             // Since we could be looped around grab the multiplier
             var multiplier = Math.ceil(AppConfig.endFrame / AppConfig.totalFrames);
@@ -398,7 +396,7 @@ var ThreeSixty = function(el, options) {
             // Now set the end frame
             if(realEndFrame !== n) {
                 AppConfig.endFrame = newEndFrame;
-                base.refresh();
+                self.refresh();
             }
         }
     };
@@ -410,17 +408,17 @@ var ThreeSixty = function(el, options) {
      * Function initilizes all the mouse and touch events for 360 slider movement.
      *
      */
-    base.initEvents = function () {
-        base.$el.bind('mousedown touchstart touchmove touchend mousemove click', function (event) {
+    self.initEvents = function () {
+        self.$el.bind('mousedown touchstart touchmove touchend mousemove click', function (event) {
 
             event.preventDefault();
 
             if ((event.type === 'mousedown' && event.which === 1) || event.type === 'touchstart') {
-                AppConfig.pointerStartPosX = base.getPointerEvent(event).pageX;
+                AppConfig.pointerStartPosX = self.getPointerEvent(event).pageX;
                 AppConfig.dragging = true;
                 AppConfig.onDragStart(AppConfig.currentFrame);
             } else if (event.type === 'touchmove') {
-                base.trackPointer(event);
+                self.trackPointer(event);
             } else if (event.type === 'touchend') {
                 AppConfig.dragging = false;
                 AppConfig.onDragStop(AppConfig.endFrame);
@@ -434,26 +432,26 @@ var ThreeSixty = function(el, options) {
         });
 
         $(window).bind('resize', function (event) {
-            base.responsive();
+            self.responsive();
         });
 
         $(document).bind('mousemove', function (event) {
             if (AppConfig.dragging) {
                 event.preventDefault();
-                if(!base.browser.isIE && AppConfig.showCursor) {
-                    base.$el.css('cursor', 'url(assets/images/hand_closed.png), auto');
+                if(!self.browser.isIE && AppConfig.showCursor) {
+                    self.$el.css('cursor', 'url(assets/images/hand_closed.png), auto');
                 }
             } else {
-                if(!base.browser.isIE && AppConfig.showCursor) {
-                    base.$el.css('cursor', 'url(assets/images/hand_open.png), auto');
+                if(!self.browser.isIE && AppConfig.showCursor) {
+                    self.$el.css('cursor', 'url(assets/images/hand_open.png), auto');
                 }
             }
-            base.trackPointer(event);
+            self.trackPointer(event);
 
         });
 
         $(window).resize(function() {
-            base.resize();
+            self.resize();
         });
     };
 
@@ -464,7 +462,7 @@ var ThreeSixty = function(el, options) {
      *
      * @params {Object} [event]
      */
-    base.getPointerEvent = function (event) {
+    self.getPointerEvent = function (event) {
         return event.originalEvent.targetTouches ? event.originalEvent.targetTouches[0] : event;
     };
 
@@ -475,24 +473,24 @@ var ThreeSixty = function(el, options) {
      *
      * @params {Object} [event]
      */
-    base.trackPointer = function (event) {
+    self.trackPointer = function (event) {
         if (AppConfig.ready && AppConfig.dragging) {
-            AppConfig.pointerEndPosX = base.getPointerEvent(event).pageX;
+            AppConfig.pointerEndPosX = self.getPointerEvent(event).pageX;
             if (AppConfig.monitorStartTime < new Date().getTime() - AppConfig.monitorInt) {
                 AppConfig.pointerDistance = AppConfig.pointerEndPosX - AppConfig.pointerStartPosX;
                 if(AppConfig.pointerDistance > 0){
-                    AppConfig.endFrame = AppConfig.currentFrame + Math.ceil((AppConfig.totalFrames - 1) * AppConfig.speedMultiplier * (AppConfig.pointerDistance / base.$el.width()));
+                    AppConfig.endFrame = AppConfig.currentFrame + Math.ceil((AppConfig.totalFrames - 1) * AppConfig.speedMultiplier * (AppConfig.pointerDistance / self.$el.width()));
                 }else{
-                    AppConfig.endFrame = AppConfig.currentFrame + Math.floor((AppConfig.totalFrames - 1) * AppConfig.speedMultiplier * (AppConfig.pointerDistance / base.$el.width()));
+                    AppConfig.endFrame = AppConfig.currentFrame + Math.floor((AppConfig.totalFrames - 1) * AppConfig.speedMultiplier * (AppConfig.pointerDistance / self.$el.width()));
                 }
 
                 if( AppConfig.disableWrap ) {
-                    AppConfig.endFrame = Math.min(AppConfig.totalFrames - (AppConfig.zeroBased ? 1 : 0), AppConfig.endFrame);
-                    AppConfig.endFrame = Math.max((AppConfig.zeroBased ? 0 : 1), AppConfig.endFrame);
+                    AppConfig.endFrame = Math.min(AppConfig.totalFrames - (AppConfig.zeroSelfd ? 1 : 0), AppConfig.endFrame);
+                    AppConfig.endFrame = Math.max((AppConfig.zeroSelfd ? 0 : 1), AppConfig.endFrame);
                 }
-                base.refresh();
+                self.refresh();
                 AppConfig.monitorStartTime = new Date().getTime();
-                AppConfig.pointerStartPosX = base.getPointerEvent(event).pageX;
+                AppConfig.pointerStartPosX = self.getPointerEvent(event).pageX;
             }
         }
     };
@@ -504,9 +502,9 @@ var ThreeSixty = function(el, options) {
      *
      */
 
-    base.refresh = function () {
+    self.refresh = function () {
         if (AppConfig.ticker === 0) {
-            AppConfig.ticker = setInterval(base.render, Math.round(1000 / AppConfig.framerate));
+            AppConfig.ticker = setInterval(self.render, Math.round(1000 / AppConfig.framerate));
         }
     };
 
@@ -516,14 +514,14 @@ var ThreeSixty = function(el, options) {
      * Function render the animation frames on the screen with easing effect.
      */
 
-    base.render = function () {
+    self.render = function () {
         var frameEasing;
         if (AppConfig.currentFrame !== AppConfig.endFrame) {
             frameEasing = AppConfig.endFrame < AppConfig.currentFrame ? Math.floor((AppConfig.endFrame - AppConfig.currentFrame) * 0.1) : Math.ceil((AppConfig.endFrame - AppConfig.currentFrame) * 0.1);
-            base.hidePreviousFrame();
+            self.hidePreviousFrame();
             AppConfig.currentFrame += frameEasing;
-            base.showCurrentFrame();
-            base.$el.trigger('frameIndexChanged', [base.getNormalizedCurrentFrame(), AppConfig.totalFrames]);
+            self.showCurrentFrame();
+            self.$el.trigger('frameIndexChanged', [self.getNormalizedCurrentFrame(), AppConfig.totalFrames]);
         } else {
             window.clearInterval(AppConfig.ticker);
             AppConfig.ticker = 0;
@@ -536,8 +534,8 @@ var ThreeSixty = function(el, options) {
      * Function hide the previous frame in the animation loop.
      */
 
-    base.hidePreviousFrame = function () {
-        frames[base.getNormalizedCurrentFrame()].removeClass('current-image').addClass('previous-image');
+    self.hidePreviousFrame = function () {
+        frames[self.getNormalizedCurrentFrame()].removeClass('current-image').addClass('previous-image');
     };
 
     /**
@@ -545,8 +543,8 @@ var ThreeSixty = function(el, options) {
      * @private
      * Function shows the current frame in the animation loop.
      */
-    base.showCurrentFrame = function () {
-        frames[base.getNormalizedCurrentFrame()].removeClass('previous-image').addClass('current-image');
+    self.showCurrentFrame = function () {
+        frames[self.getNormalizedCurrentFrame()].removeClass('previous-image').addClass('current-image');
     };
 
     /**
@@ -555,19 +553,19 @@ var ThreeSixty = function(el, options) {
      * Function normalize and calculate the current frame once the user release the mouse and release touch event.
      */
 
-    base.getNormalizedCurrentFrame = function () {
+    self.getNormalizedCurrentFrame = function () {
         var c, e;
 
         if ( !AppConfig.disableWrap ) {
             c = Math.ceil(AppConfig.currentFrame % AppConfig.totalFrames);
             if (c < 0) {
-                c += AppConfig.totalFrames - (AppConfig.zeroBased ? 1 : 0);
+                c += AppConfig.totalFrames - (AppConfig.zeroSelfd ? 1 : 0);
             }
         } else {
-            c = Math.min(AppConfig.currentFrame, AppConfig.totalFrames - (AppConfig.zeroBased ? 1 : 0));
-            e = Math.min(AppConfig.endFrame, AppConfig.totalFrames - (AppConfig.zeroBased ? 1 : 0));
-            c = Math.max(c, (AppConfig.zeroBased ? 0 : 1));
-            e = Math.max(e, (AppConfig.zeroBased ? 0 : 1));
+            c = Math.min(AppConfig.currentFrame, AppConfig.totalFrames - (AppConfig.zeroSelfd ? 1 : 0));
+            e = Math.min(AppConfig.endFrame, AppConfig.totalFrames - (AppConfig.zeroSelfd ? 1 : 0));
+            c = Math.max(c, (AppConfig.zeroSelfd ? 0 : 1));
+            e = Math.max(e, (AppConfig.zeroSelfd ? 0 : 1));
             AppConfig.currentFrame = c;
             AppConfig.endFrame = e;
         }
@@ -582,7 +580,7 @@ var ThreeSixty = function(el, options) {
      * @return Number
      */
 
-    base.getCurrentFrame = function() {
+    self.getCurrentFrame = function() {
         return AppConfig.currentFrame;
     };
 
@@ -592,10 +590,10 @@ var ThreeSixty = function(el, options) {
      *
      */
 
-    base.responsive = function() {
+    self.responsive = function() {
         if(AppConfig.responsive) {
-            base.$el.css({
-                height: base.$el.find('.current-image').first().css('height'),
+            self.$el.css({
+                height: self.$el.find('.current-image').first().css('height'),
                 width: '100%'
             });
         }
@@ -604,7 +602,7 @@ var ThreeSixty = function(el, options) {
     /**
      * Function to return with zero padding.
      */
-    base.zeroPad = function (num) {
+    self.zeroPad = function (num) {
         function pad(number, length) {
             var str = number.toString();
             if(AppConfig.zeroPadding) {
@@ -622,7 +620,7 @@ var ThreeSixty = function(el, options) {
         return pad(num, numChars);
     };
 
-    base.browser = {};
+    self.browser = {};
 
     /**
      * Function to detect if the brower is IE
@@ -630,7 +628,7 @@ var ThreeSixty = function(el, options) {
      *
      * http://msdn.microsoft.com/en-gb/library/ms537509(v=vs.85).aspx
      */
-    base.browser.isIE = function () {
+    self.browser.isIE = function () {
         var rv = -1;
         if (navigator.appName === 'Microsoft Internet Explorer')
         {
@@ -654,7 +652,7 @@ var ThreeSixty = function(el, options) {
      *
      * @return Object
      */
-    base.getConfig = function() {
+    self.getConfig = function() {
         return AppConfig;
     };
 
@@ -820,10 +818,10 @@ var ThreeSixty = function(el, options) {
          */
         zeroPadding: false,
         /**
-         * Zero based for image filenames starting at 0
+         * Zero selfd for image filenames starting at 0
          * @type {Boolean}
          */
-        zeroBased: false,
+        zeroSelfd: false,
         /**
          * @type {Array}
          * List of plugins
@@ -870,7 +868,7 @@ var ThreeSixty = function(el, options) {
          */
         playSpeed: 100
     };
-    base.init();
+    self.init();
 };
 
 $.fn.ThreeSixty = function(options) {
