@@ -442,7 +442,6 @@ var ThreeSixty = function(el, options) {
         function mouseUp(event) {
             AppConfig.dragging = false;
             AppConfig.onDragStop(AppConfig.endFrame);
-            $(this).css('cursor', 'none');
         }
 
         document.addEventListener('mouseup', mouseUp);
@@ -452,13 +451,6 @@ var ThreeSixty = function(el, options) {
         function mouseMove(event) {
             if (AppConfig.dragging) {
                 event.preventDefault();
-                if(!self.browser.isIE && AppConfig.showCursor) {
-                    self.$el.css('cursor', 'url(assets/images/hand_closed.png), auto');
-                }
-            } else {
-                if(!self.browser.isIE && AppConfig.showCursor) {
-                    self.$el.css('cursor', 'url(assets/images/hand_open.png), auto');
-                }
             }
             self.trackPointer(event);
         }
