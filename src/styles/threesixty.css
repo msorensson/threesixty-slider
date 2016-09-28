@@ -9,6 +9,9 @@
   margin: 0;
   padding: 0;
 }
+.threesixty .threesixty_images.visible {
+  display: block;
+}
 .threesixty .threesixty_images img {
   position: absolute;
   top: 0;
