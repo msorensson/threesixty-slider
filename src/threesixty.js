@@ -134,23 +134,9 @@ var ThreeSixty = function(el, options) {
             self.initEvents();
         }
         self.refresh();
-        self.initPlugins();
         AppConfig.onReady();
 
         setTimeout(function() { self.responsive(); }, 50);
-    };
-
-    /**
-     * The function to initilize external plugin
-     */
-    self.initPlugins = function () {
-        $.each(AppConfig.plugins, function(i, plugin) {
-            if(typeof $[plugin] === 'function') {
-                $[plugin].call(self, self.$el, AppConfig);
-            } else {
-                throw new Error(plugin + ' not available.');
-            }
-        });
     };
 
     /**
