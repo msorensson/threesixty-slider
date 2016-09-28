@@ -38,12 +38,6 @@ var ThreeSixty = function(el, options) {
         self.loadImages();
     };
 
-    /*
-     * Function to resize the height of responsive slider.
-     */
-    self.resize = function() {
-        // calculate height
-    };
     /**
      * @method initProgress
      * The function sets initial styles and start the progress indicator
