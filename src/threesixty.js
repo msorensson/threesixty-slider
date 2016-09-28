@@ -118,6 +118,8 @@ var ThreeSixty = function(el, options) {
      * @private
      */
     self.initProgress = function() {
+        var spinner;
+
         self.el.style.width = AppConfig.width + 'px';
         self.el.style.height = AppConfig.height + 'px';
         self.el.style.backgroundImage = 'none !important';
@@ -130,9 +132,8 @@ var ThreeSixty = function(el, options) {
 
         self.responsive();
 
-        self.$el.find(AppConfig.progress).css({
-            marginTop: ((AppConfig.height / 2) - 15) + 'px'
-        });
+        spinner = self.el.querySelector(AppConfig.progress);
+        spinner.style.marginTop = ((AppConfig.height / 2) - 15) + 'px';
         self.$el.find(AppConfig.progress).fadeIn('slow');
         self.$el.find(AppConfig.imgList).hide();
     };
