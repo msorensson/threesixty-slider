@@ -802,24 +802,4 @@ var ThreeSixty = function(el, options) {
     self.init();
 };
 
-$.fn.ThreeSixty = function(options) {
-    var els = this;
-    els.each(function() {
-        new ThreeSixty(this, options);
-    });
-};
-
-/**
- *
- * Object.create method for perform as a fallback if method not available.
- * The syntax just takes away the illusion that JavaScript uses Classical Inheritance.
- */
-if(typeof Object.create !== 'function') {
-  Object.create = function(o) {
-    'use strict';
-
-    function F() {}
-    F.prototype = o;
-    return new F();
-  };
-}
+module.exports = ThreeSixty;
