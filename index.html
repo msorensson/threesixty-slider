@@ -1,0 +1,42 @@
+<!doctype HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Threesixty</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/src/styles/threesixty.css">
+    </head>
+    <body>
+        <h2>Threesixty.js</h2>
+        <div class="threesixty car">
+            <div class="spinner">
+                <span>0%</span>
+            </div>
+            <ol class="threesixty_images"></ol>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+        <script src="/dist/threesixty.min.js"></script>
+        <script>
+         window.onload = init;
+         var car;
+
+         function init(){
+             car = $('.car').ThreeSixty({
+                 totalFrames: 52, // Total no. of image you have for 360 slider
+                 endFrame: 52, // end frame for the auto spin animation
+                 currentFrame: 1, // This the start frame for auto spin
+                 imgList: '.threesixty_images', // selector for image list
+                 progress: '.spinner', // selector to show the loading progress
+                 imagePath:'assets/car/', // path of the image assets
+                 filePrefix: '', // file prefix if any
+                 ext: '.png', // extention for the assets
+                 width: 1000,
+                 height: 447,
+                 navigation: true
+             });
+         }
+        </script>
+    </body>
+</html>
