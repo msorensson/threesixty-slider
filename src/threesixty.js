@@ -68,8 +68,7 @@ var ThreeSixty = function(el, options) {
      */
     self.$el = $(el);
     self.el = el;
-    // Add a reverse reference to the DOM object
-    self.$el.data('ThreeSixty', self);
+
     /**
      * @method init
      * The function extends the user options with default settings for the
