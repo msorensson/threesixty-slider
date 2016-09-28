@@ -594,11 +594,15 @@ var ThreeSixty = function(el, options) {
      */
 
     self.responsive = function() {
+        var currentImage,
+            currentImageHeight;
+
         if(AppConfig.responsive) {
-            self.$el.css({
-                height: self.$el.find('.current-image').first().css('height'),
-                width: '100%'
-            });
+            currentImage = self.el.querySelector('.current-image');
+            currentImageHeight = currentImage && currentImage.offsetHeight;
+
+            self.el.style.height = currentImageHeight + 'px';
+            self.el.width = '100%';
         }
     };
 
