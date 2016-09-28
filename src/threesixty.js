@@ -48,51 +48,19 @@ var assign = require('lodash/assign');
  *      });
  * **Note:** There are loads other options that you can override to customize
  * this plugin.
-
- * @extends jQuery
- * @singleton
- * @param {String} [el] jQuery selector string for the parent container
- * @param {Object} [options] An optional config object
- *
- * @return this
  */
 var ThreeSixty = function(el, options) {
-    // To avoid scope issues, use 'base' instead of 'this'
-    // to reference this class from internal events and functions.
     var self = this,
-        AppConfig, frames = [],
-        VERSION = '2.0.5';
-    // Access to jQuery and DOM versions of element
-    /**
-     * @property {$el}
-     * jQuery Dom node attached to the slider inherits all jQuery public functions.
-     */
-    self.$el = $(el);
+        AppConfig,
+        frames = [];
+
     self.el = el;
+    self.frames = [];
 
     /**
      * @method init
      * The function extends the user options with default settings for the
      * slider and initilize the slider.
-     * **Style Override example**
-     *
-     *      var product1 = $('.product1').ThreeSixty({
-     *        totalFrames: 72,
-     *        endFrame: 72,
-     *        currentFrame: 1,
-     *        imgList: '.threesixty_images',
-     *        progress: '.spinner',
-     *        imagePath:'/assets/product1/',
-     *        filePrefix: 'ipod-',
-     *        ext: '.jpg',
-     *        height: 265,
-     *        width: 400,
-     *        navigation: true,
-     *        styles: {
-     *          border: 2px solide #b4b4b4,
-     *          background: url(http://example.com/images/loader.gif) no-repeat
-     *        }
-     *      });
      */
     self.init = function() {
         AppConfig = assign(ThreeSixty.defaultOptions, options);
