@@ -19,6 +19,7 @@
     ".bowerrc"
   ],
   "dependencies": {
+    "classlist-polyfill": "^1.0.3",
     "lodash": "^4.16.2"
   },
   "devDependencies": {
