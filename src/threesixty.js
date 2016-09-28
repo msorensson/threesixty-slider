@@ -133,8 +133,6 @@ var ThreeSixty = function(el, options) {
 
         spinner = self.el.querySelector(AppConfig.progress);
         spinner.style.marginTop = ((AppConfig.height / 2) - 15) + 'px';
-//        self.$el.find(AppConfig.progress).fadeIn('slow');
-//        self.$el.find(AppConfig.imgList).hide();
     };
 
     /**
