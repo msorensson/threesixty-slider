@@ -144,17 +144,22 @@ var ThreeSixty = function(el, options) {
      * The function asynchronously loads images and inject into the slider.
      */
     self.loadImages = function() {
-        var li, imageName, image, host, selfIndex;
+        var li, imageName, image, host, selfIndex, imageList;
         li = document.createElement('li');
         selfIndex = AppConfig.zeroSelfd ? 0 : 1;
         imageName = !AppConfig.imgArray ?
             AppConfig.domain + AppConfig.imagePath + AppConfig.filePrefix + self.zeroPad((AppConfig.loadedImages + selfIndex)) + AppConfig.ext + ((self.browser.isIE()) ? '?' + new Date().getTime() : '') :
         AppConfig.imgArray[AppConfig.loadedImages];
-        image = $('<img>').attr('src', imageName).addClass('previous-image').appendTo(li);
 
-        frames.push(image);
+        image = document.createElement('img');
+        image.setAttribute('src', imageName);
+        image.classList.add('previous-image');
+        li.appendChild(image);
 
-        self.$el.find(AppConfig.imgList).append(li);
+        frames.push($(image));
+
+        imageList = self.el.querySelector(AppConfig.imgList);
+        imageList.appendChild(li);
 
         $(image).load(function () {
             self.imageLoaded();
