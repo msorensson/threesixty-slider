@@ -7,7 +7,7 @@
     "build:webpack": "webpack --progress --optimize-minimize",
     "dev": "npm run dev:webpack & npm run browsersync",
     "dev:webpack": "webpack -w",
-    "browsersync": "browser-sync start --server --files public"
+    "browsersync": "browser-sync start --server --files"
   },
   "repository": {
     "type": "git",
