@@ -133,7 +133,7 @@ var ThreeSixty = function(el, options) {
     };
 
     /**
-     * @method loadImages
+     * @method imageLoaded
      * @private
      * The function gets triggers once the image is loaded. We also update
      * the progress percentage in this function.
