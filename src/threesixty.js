@@ -873,7 +873,10 @@ var ThreeSixty = function(el, options) {
 };
 
 $.fn.ThreeSixty = function(options) {
-    return Object.create(new ThreeSixty(this, options));
+    var els = this;
+    els.each(function() {
+        new ThreeSixty(this, options);
+    });
 };
 
 /**
