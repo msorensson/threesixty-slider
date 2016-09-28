@@ -229,7 +229,6 @@ var ThreeSixty = function(el, options) {
      * @param {Object} [event] jQuery events object.
      *
      */
-
     self.next = function(event) {
         if (event) { event.preventDefault(); }
         AppConfig.endFrame -= 5;
@@ -256,7 +255,7 @@ var ThreeSixty = function(el, options) {
     self.play = function(speed, direction) {
         var _speed = speed || AppConfig.playSpeed;
         var _direction = direction || AppConfig.autoplayDirection;
-        AppConfig.autoplayDirection = _direction
+        AppConfig.autoplayDirection = _direction;
 
         if (!AppConfig.autoplay) {
             AppConfig.autoplay = true;
@@ -269,7 +268,6 @@ var ThreeSixty = function(el, options) {
      * You can stop the auto rotation of the 360 slider with this function.
      *
      */
-
     self.stop = function() {
         if (AppConfig.autoplay) {
             AppConfig.autoplay = false;
@@ -437,7 +435,6 @@ var ThreeSixty = function(el, options) {
      * Function refeshes the timer and set interval for render cycle.
      *
      */
-
     self.refresh = function () {
         if (AppConfig.ticker === 0) {
             AppConfig.ticker = setInterval(self.render, Math.round(1000 / AppConfig.framerate));
@@ -457,7 +454,6 @@ var ThreeSixty = function(el, options) {
      * @private
      * Function render the animation frames on the screen with easing effect.
      */
-
     self.render = function () {
         var frameEasing;
         if (AppConfig.currentFrame !== AppConfig.endFrame) {
@@ -478,7 +474,6 @@ var ThreeSixty = function(el, options) {
      * @private
      * Function hide the previous frame in the animation loop.
      */
-
     self.hidePreviousFrame = function () {
         var frame = self.frames[self.getNormalizedCurrentFrame()];
         frame.classList.remove('current-image');
@@ -501,7 +496,6 @@ var ThreeSixty = function(el, options) {
      * @private
      * Function normalize and calculate the current frame once the user release the mouse and release touch event.
      */
-
     self.getNormalizedCurrentFrame = function () {
         var c, e;
 
@@ -528,7 +522,6 @@ var ThreeSixty = function(el, options) {
      *
      * @return Number
      */
-
     self.getCurrentFrame = function() {
         return AppConfig.currentFrame;
     };
@@ -538,7 +531,6 @@ var ThreeSixty = function(el, options) {
      * Function calculates and set responsive height and width
      *
      */
-
     self.responsive = function() {
         var currentImage,
             currentImageHeight;
