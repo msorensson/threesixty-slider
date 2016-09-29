@@ -537,7 +537,7 @@ var ThreeSixty = function(el, options) {
             currentImageHeight = currentImage && currentImage.offsetHeight;
 
             self.el.style.height = currentImageHeight + 'px';
-            self.el.width = '100%';
+            self.el.style.width = '100%';
         }
     };
 
