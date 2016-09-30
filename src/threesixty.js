@@ -347,17 +347,18 @@ var ThreeSixty = function(el, options) {
      */
     self.initEvents = function () {
         function multiEventListener(event) {
-            event.preventDefault();
-
             if ((event.type === 'mousedown' && event.which === 1) || event.type === 'touchstart') {
                 AppConfig.pointerStartPosX = self.getPointerEvent(event).pageX;
+                AppConfig.pointerStartPosY = self.getPointerEvent(event).pageY;
                 AppConfig.dragging = true;
                 AppConfig.onDragStart(AppConfig.currentFrame);
+
             } else if (event.type === 'touchmove') {
                 self.trackPointer(event);
             } else if (event.type === 'touchend') {
                 AppConfig.dragging = false;
                 AppConfig.onDragStop(AppConfig.endFrame);
+                event.preventDefault();
             }
         }
 
@@ -397,6 +398,10 @@ var ThreeSixty = function(el, options) {
         return event.targetTouches ? event.targetTouches[0] : event;
     };
 
+    self.pointerEventDirection = function(distanceX, distanceY) {
+        return (Math.abs(distanceX) > Math.abs(distanceY)) ? 'horizontal' : 'vertical';
+    };
+
     /**
      * @method trackPointer
      * @private
@@ -407,8 +412,18 @@ var ThreeSixty = function(el, options) {
     self.trackPointer = function (event) {
         if (AppConfig.ready && AppConfig.dragging) {
             AppConfig.pointerEndPosX = self.getPointerEvent(event).pageX;
+            AppConfig.pointerEndPosY = self.getPointerEvent(event).pageY;
+
             if (AppConfig.monitorStartTime < new Date().getTime() - AppConfig.monitorInt) {
                 AppConfig.pointerDistance = AppConfig.pointerEndPosX - AppConfig.pointerStartPosX;
+                AppConfig.pointerDistanceY = AppConfig.pointerEndPosY - AppConfig.pointerStartPosY;
+
+                if (self.pointerEventDirection(AppConfig.pointerDistance, AppConfig.pointerDistanceY) !== 'horizontal') {
+                    return;
+                }
+
+                event.preventDefault();
+
                 if(AppConfig.pointerDistance > 0){
                     AppConfig.endFrame = AppConfig.currentFrame + Math.ceil((AppConfig.totalFrames - 1) * AppConfig.speedMultiplier * (AppConfig.pointerDistance / self.el.offsetWidth));
                 }else{
