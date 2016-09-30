@@ -61,7 +61,9 @@ var ThreeSixty = function(el, options) {
         self.responsive();
 
         spinner = self.el.querySelector(AppConfig.progress);
-        spinner.style.marginTop = ((AppConfig.height / 2) - 15) + 'px';
+        if (spinner) {
+            spinner.style.marginTop = ((AppConfig.height / 2) - 15) + 'px';
+        }
     };
 
     /**
@@ -112,7 +114,11 @@ var ThreeSixty = function(el, options) {
     self.imageLoaded = function () {
         var spinnerTextEl = self.el.querySelector(AppConfig.progress + ' span');
         AppConfig.loadedImages += 1;
-        spinnerTextEl.innerHTML = Math.floor(AppConfig.loadedImages / AppConfig.totalFrames * 100) + '%';
+
+        if (spinnerTextEl) {
+            spinnerTextEl.innerHTML = Math.floor(AppConfig.loadedImages / AppConfig.totalFrames * 100) + '%';
+        }
+
         if (AppConfig.loadedImages >= AppConfig.totalFrames) {
             if(AppConfig.disableSpin) {
                 self.frames[0].classList.remove('previous-image');
